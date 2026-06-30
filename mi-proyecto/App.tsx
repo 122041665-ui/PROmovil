@@ -1,11 +1,39 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ConsideracionScreen from './src/screens/ConsideracionScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import PerfilScreen from './src/screens/PerfilScreen';
+import ArtesanosScreen from './screens/ArtesanosScreen';
+import ConsideracionScreen from './screens/ConsideracionScreen';
+import HomeScreen from './screens/HomeScreen';
+import PerfilArtesanoScreen from './screens/PerfilArtesanoScreen';
+import PerfilScreen from './screens/PerfilScreen';
+import { ArtesanosStackParamList } from './src/types/navigation';
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator<ArtesanosStackParamList>();
+
+function ArtesanosStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#3b82f6' },
+        headerTintColor: '#fff',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen
+        name="ListaArtesanos"
+        component={ArtesanosScreen}
+        options={{ title: 'Artesanos' }}
+      />
+      <Stack.Screen
+        name="PerfilArtesano"
+        component={PerfilArtesanoScreen}
+        options={{ title: 'Perfil del artesano' }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -36,6 +64,11 @@ export default function App() {
         <Tab.Screen
           name="Perfil"
           component={PerfilScreen}
+        />
+        <Tab.Screen
+          name="Artesanos"
+          component={ArtesanosStack}
+          options={{ headerShown: false }}
         />
         <Tab.Screen
           name="Proyecto"

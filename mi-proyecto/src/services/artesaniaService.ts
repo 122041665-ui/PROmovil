@@ -1,6 +1,6 @@
 import { Artesano, Producto } from '../types';
 
-export const artesanos: Artesano[] = [
+const artesanos: Artesano[] = [
   {
     id: 1,
     nombre: 'Maria Lopez',
@@ -24,7 +24,7 @@ export const artesanos: Artesano[] = [
   },
 ];
 
-export const productos: Producto[] = [
+const productos: Producto[] = [
   {
     id: 1,
     nombre: 'Jarron Talavera Azul',
@@ -51,8 +51,24 @@ export const productos: Producto[] = [
     descripcion: 'Figura de madera pintada a mano representando un dragon.',
     imagen: 'https://picsum.photos/id/202/300',
     precioInicial: 1200,
-    precioActual: 1200,
+    precioActual: 1400,
     artesanoId: 3,
-    fechaFin: '2026-07-10',
+    fechaFin: '2026-07-08',
   },
 ];
+
+export async function obtenerArtesanos(): Promise<Artesano[]> {
+  return [...artesanos].sort((a, b) => a.nombre.localeCompare(b.nombre));
+}
+
+export async function obtenerProductos(): Promise<Producto[]> {
+  return productos;
+}
+
+export async function obtenerArtesanoPorId(id: number): Promise<Artesano | null> {
+  return artesanos.find((artesano) => artesano.id === id) ?? null;
+}
+
+export async function obtenerProductosPorArtesano(artesanoId: number): Promise<Producto[]> {
+  return productos.filter((producto) => producto.artesanoId === artesanoId);
+}
